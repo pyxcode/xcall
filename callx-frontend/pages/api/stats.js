@@ -1,5 +1,18 @@
 export default function handler(req, res) {
-  // Données réalistes pour le dashboard
+  // Essayer de lire les vraies données d'abord
+  let realData = null;
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const dataPath = path.join(process.cwd(), '..', 'dashboard_data.json');
+    if (fs.existsSync(dataPath)) {
+      realData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+    }
+  } catch (error) {
+    console.log('Pas de données réelles trouvées, utilisation des données mockées');
+  }
+
+  // Données réalistes pour le dashboard (fallback si pas de vraies données)
   const stats = {
     // KPIs principaux
     averageScore: 8.4,
@@ -30,30 +43,30 @@ export default function handler(req, res) {
     excellentCalls: 42,
     feedbackApplied: 67,
     
-    // Insights actionnables
+    // Insights actionnables (basés sur vraies analyses)
     blockers: [
-      'Budget',
-      'Décision lente', 
-      'Timing projet'
+      'Manque d\'engagement client',
+      'Termes techniques non clarifiés', 
+      'Monologue vendeur (100% temps parole)'
     ],
     
     winningArguments: [
-      'ROI en 3 mois',
-      'Témoignages clients',
-      'Comparaison concurrents'
+      'Automatisation du placement de suivi',
+      'Augmentation de la productivité',
+      'Résilience et répartition entre fibres'
     ],
     
     improvements: [
-      'Poser plus de questions ouvertes',
-      'Reformuler les objections',
-      'Clarifier les prochaines étapes'
+      'Inclure le client dans la conversation',
+      'Clarifier les termes techniques',
+      'Fournir des exemples concrets'
     ],
     
-    // Verbatims réels
+    // Verbatims réels (à remplacer par de vrais extraits)
     verbatims: {
-      blocker: "Le budget est déjà alloué à un autre outil...",
-      winning: "Votre support 24/7, c'est un vrai plus pour nous.",
-      improvement: "Qu'est-ce qui vous ferait dire oui aujourd'hui ?"
+      blocker: "Le client n'était pas assez impliqué dans la conversation",
+      winning: "L'automatisation du placement de suivi a bien marché",
+      improvement: "Il faut inclure le client dans la conversation"
     },
     
     // Plan d'action
@@ -79,5 +92,16 @@ export default function handler(req, res) {
     ]
   }
   
-  res.status(200).json(stats)
+  // Utiliser les vraies données si disponibles
+  const finalStats = realData ? {
+    ...stats,
+    averageScore: realData.averageScore,
+    totalCalls: realData.totalCalls,
+    blockers: realData.blockers,
+    winningArguments: realData.winningArguments,
+    improvements: realData.improvements,
+    lastUpdated: realData.lastUpdated
+  } : stats;
+  
+  res.status(200).json(finalStats)
 }
