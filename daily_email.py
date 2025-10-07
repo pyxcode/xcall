@@ -11,23 +11,45 @@ from datetime import datetime, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from collections import defaultdict
-from .env import SMTP_SERVER, SMTP_PORT, EMAIL_USER, EMAIL_PASSWORD
+import os
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement
+load_dotenv()
+
+SMTP_SERVER = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
+SMTP_PORT = int(os.getenv('SMTP_PORT', 587))
+EMAIL_USER = os.getenv('SMTP_USERNAME')
+EMAIL_PASSWORD = os.getenv('SMTP_PASSWORD')
 
 def get_today_analyses():
-    """Récupère toutes les analyses d'aujourd'hui"""
+    """Récupère toutes les analyses d'aujourd'hui (ou les plus récentes pour test)"""
     today = datetime.now().strftime('%Y-%m-%d')
     analyses = []
     
+    # Pour le test, utiliser les analyses disponibles
+    if not os.path.exists('analyses'):
+        print("❌ Dossier 'analyses' non trouvé")
+        return []
+    
     for file_name in os.listdir('analyses'):
-        if file_name.startswith('call_') and file_name.endswith('.json'):
-            # Extraire la date du nom de fichier
-            if today in file_name:
-                try:
-                    with open(os.path.join('analyses', file_name), 'r', encoding='utf-8') as f:
-                        analysis = json.load(f)
-                        analyses.append(analysis)
-                except Exception as e:
-                    print(f"Erreur lecture {file_name}: {e}")
+        # Nouveau format : analyses_YYYY-MM-DD.json
+        if file_name.startswith('analyses_') and file_name.endswith('.json'):
+            try:
+                with open(os.path.join('analyses', file_name), 'r', encoding='utf-8') as f:
+                    daily_analyses = json.load(f)
+                    analyses.extend(daily_analyses)
+            except Exception as e:
+                print(f"Erreur lecture {file_name}: {e}")
+        
+        # Ancien format : call_XXX_YYYY-MM-DD.json
+        elif file_name.startswith('call_') and file_name.endswith('.json'):
+            try:
+                with open(os.path.join('analyses', file_name), 'r', encoding='utf-8') as f:
+                    analysis = json.load(f)
+                    analyses.append(analysis)
+            except Exception as e:
+                print(f"Erreur lecture {file_name}: {e}")
     
     return analyses
 
@@ -200,11 +222,22 @@ def send_daily_email(assignee_email, assignee_name, stats):
         html_part = MIMEText(html_content, 'html', 'utf-8')
         msg.attach(html_part)
         
-        # Envoyer l'email
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
-            server.login(EMAIL_USER, EMAIL_PASSWORD)
-            server.send_message(msg)
+        # Envoyer l'email avec timeout
+        print(f"🔄 Connexion SMTP à {SMTP_SERVER}:{SMTP_PORT}...")
+        
+        # Utiliser SSL pour le port 465
+        if SMTP_PORT == 465:
+            import ssl
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=context, timeout=30) as server:
+                server.login(EMAIL_USER, EMAIL_PASSWORD)
+                server.send_message(msg)
+        else:
+            # Utiliser STARTTLS pour les autres ports
+            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30) as server:
+                server.starttls()
+                server.login(EMAIL_USER, EMAIL_PASSWORD)
+                server.send_message(msg)
         
         print(f"✅ Email envoyé à {assignee_name} ({assignee_email})")
         return True
