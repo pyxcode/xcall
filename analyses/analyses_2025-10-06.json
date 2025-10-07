@@ -1,0 +1,23 @@
+[
+  {
+    "mood_global": "7",
+    "temps_parole": "100% vendeur",
+    "blocages_client": [],
+    "arguments_reussis": [
+      "Automatisation du placement de suivi",
+      "Augmentation de la productivité",
+      "Résilience et répartition entre fibres"
+    ],
+    "arguments_non_reussis": [],
+    "ameliorations": [
+      "Inclure le client dans la conversation",
+      "Clarifier les termes techniques",
+      "Fournir des exemples concrets"
+    ],
+    "assignee_email": "louan.bardou@polytechnique.edu",
+    "assignee_name": "Louan Bardou",
+    "client_name": "Unknown",
+    "call_id": 3171829108,
+    "date": "2025-10-06 23:30"
+  }
+]

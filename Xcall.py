@@ -79,11 +79,15 @@ Analysez cet appel et fournissez EXACTEMENT ce format JSON:
   "mood_global": "Note sur 10",
   "temps_parole": "Répartition % vendeur vs client",
   "blocages_client": ["Blocage 1 avec verbatim exact", "Blocage 2 avec verbatim exact"],
-  "Solution_proposee": ["oui/non - Solution 1 avec verbatim exact", "oui/non - Solution 2 avec verbatim exact"],
   "arguments_reussis": ["Argument qui a marché avec verbatim", "Autre argument réussi"],
-  "arguments_echecs": ["Argument qui n'a pas marché avec verbatim", "Autre échec"],
+  "arguments_non_reussis": ["Argument qui n'a pas marché avec verbatim", "Autre échec"],
   "ameliorations": ["Amélioration 1", "Amélioration 2", "Amélioration 3"]
 }}
+
+CRITÈRES IMPORTANTS:
+- "arguments_reussis": Seulement les arguments où le CLIENT a montré un intérêt réel, une adhésion, ou une réaction positive claire
+- "arguments_non_reussis": Les arguments où le client a résisté, refusé, ou montré de l'indifférence
+- Ne pas mettre dans "arguments_reussis" si le client n'a pas réagi positivement
 
 Répondez UNIQUEMENT avec le JSON, rien d'autre.
 """
@@ -98,27 +102,42 @@ Répondez UNIQUEMENT avec le JSON, rien d'autre.
         try:
             analysis = json.loads(response.choices[0].message.content)
         except:
-            analysis = {"mood_global": "Erreur", "temps_parole": "Erreur", "blocages_client" : [], "Solution_proposee": [], "arguments_reussis": [], "arguments_echecs": [], "ameliorations": []}
+            analysis = {"mood_global": "Erreur", "temps_parole": "Erreur", "blocages_client" : [], "arguments_reussis": [], "arguments_non_reussis": [], "ameliorations": []}
         
-        # Sauvegarder analyse
-
+        # Sauvegarder analyse dans un fichier consolidé par jour
         analysis_with_email = {
-    **analysis,
-    "assignee_email": assignee_email,
-    "assignee_name": assignee,
-    "client_name": client_name,
-    "call_id": call_id,
-    "date": started_at.strftime('%Y-%m-%d %H:%M')
-}
-        with open(f"analyses/call_{call_id}_{started_at.strftime('%Y-%m-%d')}.json", 'w', encoding='utf-8') as f:
-            json.dump(analysis_with_email, f, indent=2, ensure_ascii=False)
+            **analysis,
+            "assignee_email": assignee_email,
+            "assignee_name": assignee,
+            "client_name": client_name,
+            "call_id": call_id,
+            "date": started_at.strftime('%Y-%m-%d %H:%M')
+        }
+        
+        # Fichier consolidé par jour : analyses_YYYY-MM-DD.json
+        daily_file = f"analyses/analyses_{started_at.strftime('%Y-%m-%d')}.json"
+        
+        # Charger les analyses existantes du jour ou créer une nouvelle liste
+        existing_analyses = []
+        if os.path.exists(daily_file):
+            try:
+                with open(daily_file, 'r', encoding='utf-8') as f:
+                    existing_analyses = json.load(f)
+            except:
+                existing_analyses = []
+        
+        # Ajouter la nouvelle analyse
+        existing_analyses.append(analysis_with_email)
+        
+        # Sauvegarder le fichier consolidé
+        with open(daily_file, 'w', encoding='utf-8') as f:
+            json.dump(existing_analyses, f, indent=2, ensure_ascii=False)
         
         print(f"📊 Mood: {analysis['mood_global']}/10")
         print(f"💬 Temps parole: {analysis['temps_parole']}")
         print(f"🚫 Blocages: {len(analysis['blocages_client'])}")
-        print(f"🚫 Solution proposée: {len(analysis['Solution_proposee'])}")
         print(f"✅ Réussis: {len(analysis['arguments_reussis'])}")
-        print(f"❌ Échecs: {len(analysis['arguments_echecs'])}")
+        print(f"❌ Échecs: {len(analysis['arguments_non_reussis'])}")
         print(f"📈 Améliorations: {len(analysis['ameliorations'])}")
     else:
         print("🎵 Pas d'enregistrement")

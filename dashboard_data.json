@@ -1,18 +1,63 @@
 {
-  "averageScore": 7.0,
-  "totalCalls": 1,
-  "blockers": [
-    "Aucun blocage identifié aujourd'hui"
+  "averageScore7Days": 7.0,
+  "averageScorePrevious7Days": 0,
+  "callsCount7Days": 1,
+  "callsCountPrevious7Days": 0,
+  "weeklyLeaderboard": [
+    {
+      "rank": 1,
+      "name": "Louan Bardou",
+      "score": 7,
+      "delta": 0,
+      "feedback": ""
+    }
   ],
-  "winningArguments": [
-    "Automatisation du placement de suivi",
-    "Augmentation de la productivité",
-    "Résilience et répartition entre fibres"
+  "dailyScores": {},
+  "mainBlockers": [],
+  "unresolvedBlockers": [],
+  "effectiveArguments": [
+    {
+      "argument": "Automatisation du placement de suivi",
+      "success_rate": "100%",
+      "context_sample": "1 succès sur 1 tentatives"
+    },
+    {
+      "argument": "Augmentation de la productivité",
+      "success_rate": "100%",
+      "context_sample": "1 succès sur 1 tentatives"
+    },
+    {
+      "argument": "Résilience et répartition entre fibres",
+      "success_rate": "100%",
+      "context_sample": "1 succès sur 1 tentatives"
+    }
   ],
-  "improvements": [
-    "Inclure le client dans la conversation",
-    "Clarifier les termes techniques",
-    "Fournir des exemples concrets"
+  "failedArguments": [],
+  "suggestedImprovements": [
+    {
+      "improvement": "Inclure le client dans la conversation",
+      "linked_to": "Suggéré 1 fois par GPT"
+    },
+    {
+      "improvement": "Clarifier les termes techniques",
+      "linked_to": "Suggéré 1 fois par GPT"
+    },
+    {
+      "improvement": "Fournir des exemples concrets",
+      "linked_to": "Suggéré 1 fois par GPT"
+    }
   ],
-  "lastUpdated": "2025-10-07"
+  "averageProgression": 0,
+  "bestProgression": {
+    "name": "",
+    "progression": 0
+  },
+  "lastUpdated": "2025-10-08 01:44",
+  "dataSource": "100% Données extraites des analyses GPT",
+  "realCallsCount": 1,
+  "realAssigneesCount": 1,
+  "realBlockersCount": 0,
+  "realArgumentsCount": 3,
+  "realImprovementsCount": 3,
+  "isRealExtractedData": true
 }
