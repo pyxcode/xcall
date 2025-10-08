@@ -9,7 +9,7 @@ J'ai développé **CallX**, une plateforme qui utilise l'IA pour analyser automa
 ### Le Problème que j'ai Identifié
 
 En tant qu'ingenieur ayant passé 6 mois en travaillant aux cotés d'une equipe commerciale, j'ai observé que :
-- **Les managers commerciaux** passent de nombreuses heures à écouter des appels pour donner du feedback
+- **Les managers commerciaux** n'ont pas le temps d'écouter des appels pour donner du feedback
 - **Les commerciaux** ne savent pas toujours pourquoi ils perdent des deals
 - **Les équipes** répètent les mêmes erreurs sans apprentissage systématique
 - **L'analyse des appels** est subjective et les points de blocages implicites
