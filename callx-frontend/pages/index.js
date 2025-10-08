@@ -119,19 +119,26 @@ export default function Home() {
               </button>
             </Link>
             
-            <button style={{
-              background: 'transparent',
-              color: '#ffffff',
-              padding: '1.3rem 2.8rem',
-              fontSize: '1.2rem',
-              border: '2px solid rgba(255,255,255,0.3)',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              fontWeight: '600',
-              transition: 'all 0.3s ease'
-            }}>
+            <a 
+              href="https://calendly.com/louan-bardou/15min" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{
+                background: 'transparent',
+                color: '#ffffff',
+                padding: '1.3rem 2.8rem',
+                fontSize: '1.2rem',
+                border: '2px solid rgba(255,255,255,0.3)',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                fontWeight: '600',
+                transition: 'all 0.3s ease',
+                textDecoration: 'none',
+                display: 'inline-block'
+              }}
+            >
               Request Demo
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -544,19 +551,26 @@ export default function Home() {
               </button>
             </Link>
             
-            <button style={{
-              background: 'transparent',
-              color: '#ffffff',
-              padding: '1.3rem 3rem',
-              fontSize: '1.2rem',
-              border: '2px solid rgba(255,255,255,0.3)',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              fontWeight: '600',
-              transition: 'all 0.3s ease'
-            }}>
+            <a 
+              href="https://calendly.com/louan-bardou/15min" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{
+                background: 'transparent',
+                color: '#ffffff',
+                padding: '1.3rem 3rem',
+                fontSize: '1.2rem',
+                border: '2px solid rgba(255,255,255,0.3)',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                fontWeight: '600',
+                transition: 'all 0.3s ease',
+                textDecoration: 'none',
+                display: 'inline-block'
+              }}
+            >
               Schedule Demo
-            </button>
+            </a>
           </div>
         </div>
       </section>

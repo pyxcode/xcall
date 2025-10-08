@@ -1,12 +1,22 @@
 import { useState, useEffect, useMemo, memo } from 'react'
+import { useRouter } from 'next/router'
 
 const Dashboard = memo(function Dashboard() {
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [authenticated, setAuthenticated] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
+    // Vérifier l'authentification
+    const isAuthenticated = sessionStorage.getItem('dashboard_authenticated') === 'true'
+    if (!isAuthenticated) {
+      router.push('/login')
+      return
+    }
+    setAuthenticated(true)
     fetchStats()
-  }, [])
+  }, [router])
 
   const fetchStats = async () => {
     try {
@@ -39,6 +49,21 @@ const Dashboard = memo(function Dashboard() {
       dailyScores: stats.dailyScores || {}
     }
   }, [stats?.lastUpdated, stats?.realCallsCount])
+
+  if (!authenticated) {
+    return (
+      <div style={{ 
+        minHeight: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%)',
+        color: '#ffffff'
+      }}>
+        <div style={{ fontSize: '1.2rem' }}>Vérification de l'authentification...</div>
+      </div>
+    )
+  }
 
   if (loading) {
     return (
@@ -150,6 +175,25 @@ const Dashboard = memo(function Dashboard() {
                 🎯 100% Données réelles
               </div>
             )}
+            <button
+              onClick={() => {
+                sessionStorage.removeItem('dashboard_authenticated')
+                router.push('/login')
+              }}
+              style={{
+                background: 'rgba(239, 68, 68, 0.1)',
+                color: '#ef4444',
+                border: '1px solid rgba(239, 68, 68, 0.2)',
+                padding: '0.5rem 1rem',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+                fontWeight: '600',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              Déconnexion
+            </button>
           </div>
         </div>
       </div>
