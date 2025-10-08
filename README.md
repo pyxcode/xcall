@@ -14,7 +14,7 @@ En tant qu'ingenieur ayant passé 6 mois en travaillant aux cotés d'une equipe 
 - **Les équipes** répètent les mêmes erreurs sans apprentissage systématique
 - **L'analyse des appels** est subjective et les points de blocages implicites
 
-Par ailleurs, le CEO a peu de visibilité sur la progression des équipes et sur les raisons de leurs échecs (Quels points blocants? Quels peur?)
+Par ailleurs, le CEO a peu de visibilité sur la progression des équipes et sur les raisons de leurs échecs (Quels points blocants? Quelles peurs? Quels enjeux?)
 
 ### 💡 Ma Solution
 
