@@ -1,26 +1,34 @@
-CallX - AI Sales Coach Platform
+# CallX — AI Sales Coach Platform
 
-> **Un coach IA pour équipes commerciales**
+> **An intelligent AI system that analyzes sales calls and delivers actionable feedback to improve team performance.**
 
-## Présentation du Projet
+## Overview
 
-J'ai développé **CallX**, une plateforme qui utilise l'IA pour analyser automatiquement les appels commerciaux et donner des feedbacks personnalisés aux équipes de vente.
+**CallX** is a data-driven platform that leverages **speech recognition** and **natural language processing (NLP)** to analyze real sales calls automatically and generate structured, personalized feedback for each sales representative.
 
-### Le Problème que j'ai Identifié
+The goal is to **automate post-call analysis**, reduce managerial workload, and provide **continuous performance insights** for the entire sales organization.
 
-En tant qu'ingenieur ayant passé 6 mois en travaillant aux cotés d'une equipe commerciale, j'ai observé que :
-- **Les managers commerciaux** n'ont pas le temps d'écouter des appels pour donner du feedback
-- **Les commerciaux** ne savent pas toujours pourquoi ils perdent des deals
-- **Les équipes** répètent les mêmes erreurs sans apprentissage systématique
-- **L'analyse des appels** est subjective et les points de blocages implicites
+## Solution
 
-Par ailleurs, le CEO a peu de visibilité sur la progression des équipes et sur les raisons de leurs échecs (Quels points blocants? Quelles peurs? Quels enjeux?)
+CallX automates the entire process of sales-call analysis through a modular AI pipeline:
 
-### 💡 Ma Solution
+1. **Automatic call capture** via Aircall API  
+2. **Speech-to-text transcription** using **OpenAI Whisper**  
+3. **Contextual and behavioral analysis**
+4. **Real-time dashboard** with aggregated KPIs and insights  
+5. **Automated daily feedback reports** for each salesperson  
 
-CallX automatise complètement l'analyse des appels commerciaux :
-1. **Enregistrement automatique** via Aircall
-2. **Transcription IA** avec Whisper
-3. **Analyse intelligente** avec GPT-4
-4. **Dashboard temps réel** pour les dirigeants
-5. **Emails quotidiens** avec bouvcle de feedback pour chaque commercial
+
+## Example Output
+
+```json
+{
+  "call_id": "AICALL_0342",
+  "agent": "John Doe",
+  "sentiment": "Positive",
+  "key_objections": ["pricing", "timeline"],
+  "recommendations": [
+    "Reframe pricing as ROI-driven",
+    "Ask open-ended qualification questions earlier"
+  ]
+}
